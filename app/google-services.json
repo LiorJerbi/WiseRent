@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "402198516770",
+    "project_id": "wiserent-2fe83",
+    "storage_bucket": "wiserent-2fe83.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:402198516770:android:39518a635926467088667b",
+        "android_client_info": {
+          "package_name": "com.example.wiserent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUESvUJEfRjUjlc8xxM9IIaM4toT8wh5U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
