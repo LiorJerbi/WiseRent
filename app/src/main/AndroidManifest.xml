@@ -15,6 +15,18 @@
         android:theme="@style/Theme.WiseRent"
         tools:targetApi="31">
         <activity
+            android:name=".NewAppealRented"
+            android:exported="false" />
+        <activity
+            android:name=".NewAppealRenter"
+            android:exported="false" />
+        <activity
+            android:name=".AppealTrackRented"
+            android:exported="false" />
+        <activity
+            android:name=".AppealTrackRenter"
+            android:exported="false" />
+        <activity
             android:name=".RentedHomePage"
             android:exported="false" />
         <activity
