@@ -8,7 +8,7 @@
     tools:context=".Register">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/appLogo"
         android:layout_width="198dp"
         android:layout_height="115dp"
         android:layout_marginTop="52dp"
@@ -31,7 +31,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/appLogo"
         app:layout_constraintVertical_bias="0.061" />
 
     <EditText

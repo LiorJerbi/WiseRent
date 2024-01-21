@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,9 +15,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.w3c.dom.Document;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Register extends AppCompatActivity {
     //Creating variables for extracting info from the register screen
@@ -24,7 +34,9 @@ public class Register extends AppCompatActivity {
     Button rRegisterBtn;
     TextView rLoginBtn;
     FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
     ProgressBar progressBar;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +54,7 @@ public class Register extends AppCompatActivity {
 
         //Authentication instance to register our new user to firebase
         fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
         //checking if there is a user already connected so register not necessary
         if(fAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -53,6 +66,8 @@ public class Register extends AppCompatActivity {
             public void onClick(View v) {
                 String email = rEmail.getText().toString().trim();
                 String password = rPassword.getText().toString().trim();
+                String fullName = rFullName.getText().toString().trim();
+                String phone = rPhone.getText().toString().trim();
 
                 //checking for null email or password
                 if(TextUtils.isEmpty(email)){
@@ -78,7 +93,24 @@ public class Register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(Register.this, "המשתמש נוצר.", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            userID = fAuth.getCurrentUser().getUid();
+                            DocumentReference documentReference = fStore.collection("users").document(userID);
+                            Map<String,Object> user = new HashMap<>();
+                            user.put("fullname",fullName);
+                            user.put("email",email);
+                            user.put("phone",phone);
+                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Log.d("TAG","onSuccess: user Profile is created for "+userID);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("TAG","onFailiure: "+e.toString());
+                                }
+                            });
+                            startActivity(new Intent(getApplicationContext(), PremissionType.class));
                         }
                         else{
                             Toast.makeText(Register.this,"שגיאה!" + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
