@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="bills_type">
+        <item>ועד בית</item>
+        <item>חשמל</item>
+        <item>ארנונה</item>
+        <item>גז</item>
+        <item>מים</item>
+    </string-array>
+</resources>

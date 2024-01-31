@@ -57,7 +57,7 @@ public class Register extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         //checking if there is a user already connected so register not necessary
         if(fAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), PremissionType.class));
             finish();
         }
 

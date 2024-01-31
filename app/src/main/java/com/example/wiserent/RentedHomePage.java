@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +24,7 @@ public class RentedHomePage extends AppCompatActivity {
     FirebaseFirestore fStore;
     String userID;
     Button bLogOutBtn;
+    ImageButton bUserBtn;
 
 
     @Override
@@ -32,6 +34,7 @@ public class RentedHomePage extends AppCompatActivity {
 
         fullName = findViewById(R.id.Name);
         bLogOutBtn = findViewById(R.id.logoutBtn);
+        bUserBtn = findViewById(R.id.userBtn);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -42,7 +45,12 @@ public class RentedHomePage extends AppCompatActivity {
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                fullName.setText(value.getString("fullname"));          //extracting the user's full name from DB
+                if(value != null && value.exists()){
+                    fullName.setText(value.getString("fullname"));          //extracting the user's full name from DB
+                }
+                else{
+                    fullName.setText("User not found");
+                }
             }
         });
 
@@ -52,11 +60,17 @@ public class RentedHomePage extends AppCompatActivity {
                 logout(v);
             }
         });
+
+        bUserBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), RentedHomePage.class));
+            }
+        });
     }
 
     public void logout(View view){
         fAuth.signOut(); //logout
         startActivity(new Intent(getApplicationContext(), Login.class));
-        finish();
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundwallp"
-    tools:context=".NewAppealRenter">
+    tools:context=".paymentRequest">
 
     <ImageView
         android:id="@+id/appLogo"
@@ -31,46 +31,53 @@
         app:srcCompat="@drawable/homeicon" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:orientation="horizontal"
+        android:id="@+id/linearLayout2"
+        android:layout_width="405dp"
+        android:layout_height="135dp"
+        android:layout_marginTop="200dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/dateForFixerBtn"
-            android:layout_width="208dp"
+        <Spinner
+            android:id="@+id/paymentType"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="תיאום תאריך לבעל מקצוע"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:spinnerMode="dropdown" />
 
-        <Button
-            android:id="@+id/paymentReqBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+        <Spinner
+            android:id="@+id/paymentDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="בקשה לתשלום"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:spinnerMode="dropdown"/>
+
     </LinearLayout>
 
-    <Button
-        android:id="@+id/otherBtn"
-        android:layout_width="137dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="12dp"
+    <EditText
+        android:id="@+id/payAmount"
+        android:layout_width="391dp"
+        android:layout_height="62dp"
         android:layout_weight="1"
-        android:text="אחר"
-        android:textSize="20sp"
+        android:ems="10"
+        android:hint="הזן סכום לתשלום"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <Button
+        android:id="@+id/finishBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="סיום"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/payAmount" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

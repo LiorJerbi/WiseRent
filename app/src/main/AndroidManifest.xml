@@ -15,6 +15,9 @@
         android:theme="@style/Theme.WiseRent"
         tools:targetApi="31">
         <activity
+            android:name=".paymentRequest"
+            android:exported="false" />
+        <activity
             android:name=".NewAppealRented"
             android:exported="false" />
         <activity
