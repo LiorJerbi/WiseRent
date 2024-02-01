@@ -26,18 +26,24 @@ public class RenterHomePage extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
-    Button bLogoutBtn , bNewAppealBtn;
+    Button bLogoutBtn , bNewAppealBtn, bAssetCustomizeBtn;
     ImageButton bHomeBtn;
+    User user, userObj; //user is for getting data from the database, userObj is the object we get from last screen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_renter_home_page);
 
+        // Retrieve the User object passed from the previous activity
+        Intent intent = getIntent();
+        userObj = (User) intent.getSerializableExtra("user");
+
         fullName = findViewById(R.id.Name);
         bLogoutBtn = findViewById(R.id.logoutBtn);
         bHomeBtn = findViewById(R.id.homeBtn);
         bNewAppealBtn = findViewById(R.id.newAppealBtn);
+        bAssetCustomizeBtn = findViewById(R.id.assetCustomizeBtn);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -49,7 +55,8 @@ public class RenterHomePage extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(value != null && value.exists()){
-                    fullName.setText(value.getString("fullname"));          //extracting the user's full name from DB
+                    user = value.toObject(User.class);
+                    fullName.setText(user.getFullName());          //extracting the user's full name from DB
                 }
                 else{
                     fullName.setText("User not found");
@@ -67,13 +74,26 @@ public class RenterHomePage extends AppCompatActivity {
         bHomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), RenterHomePage.class));
+                Intent renterIntent = new Intent(getApplicationContext(), RenterHomePage.class);
+                renterIntent.putExtra("user", userObj); // Pass the User object to RentedHomePage
+                startActivity(renterIntent);
             }
         });
         bNewAppealBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), NewAppealRenter.class));
+                Intent newAppealIntent = new Intent(getApplicationContext(), NewAppealRenter.class);
+                newAppealIntent.putExtra("user", userObj); // Pass the User object to NewAppeal of renter
+                startActivity(newAppealIntent);
+            }
+        });
+
+        bAssetCustomizeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent assetCustomizeIntent = new Intent(getApplicationContext(), AssetCustomize.class);
+                assetCustomizeIntent.putExtra("user", userObj); // Pass the User object to asset customize of renter
+                startActivity(assetCustomizeIntent);
             }
         });
     }

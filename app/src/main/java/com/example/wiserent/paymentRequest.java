@@ -26,7 +26,8 @@ public class paymentRequest extends AppCompatActivity {
     Button bfinishBtn;
     Spinner pType, pDate;
     EditText pAmount;
-    PaymentInfo paymentInfo;
+    Bill bill;
+    User userObj;
     FirebaseFirestore fStore;
 
 
@@ -35,13 +36,17 @@ public class paymentRequest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment_request);
 
+        // Retrieve the User object passed from the previous activity
+        Intent intent = getIntent();
+        userObj = (User) intent.getSerializableExtra("user");
+
         bhomeBtn = findViewById(R.id.homeBtn);
         bfinishBtn = findViewById(R.id.finishBtn);
         pDate = findViewById(R.id.paymentDate);
         pType = findViewById(R.id.paymentType);
         pAmount = findViewById(R.id.payAmount);
         fStore = FirebaseFirestore.getInstance();
-        paymentInfo = new PaymentInfo();
+        bill = new Bill();
 
         ArrayAdapter<CharSequence> dateAdapter = ArrayAdapter.createFromResource(this,R.array.months_array, android.R.layout.simple_spinner_item);
         ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(this,R.array.bills_type, android.R.layout.simple_spinner_item);
@@ -52,10 +57,11 @@ public class paymentRequest extends AppCompatActivity {
         pDate.setAdapter(dateAdapter);
         pType.setAdapter(typeAdapter);
 
+        //extracting the bill month user clicked on
         pDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                paymentInfo.setMonth(parent.getItemAtPosition(position).toString());
+                bill.setMonth(parent.getItemAtPosition(position).toString());
             }
 
             @Override
@@ -63,10 +69,12 @@ public class paymentRequest extends AppCompatActivity {
 
             }
         });
+
+        //extracting the Bill type user clicked on
         pType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                paymentInfo.setBillType(parent.getItemAtPosition(position).toString());
+                bill.setBillType(parent.getItemAtPosition(position).toString());
             }
 
             @Override
@@ -74,24 +82,27 @@ public class paymentRequest extends AppCompatActivity {
 
             }
         });
+
 
         bfinishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                paymentInfo.setAmount(Double.parseDouble(pAmount.getText().toString().trim()));
-                savePaymentInfoToFirebase(paymentInfo);
+                bill.setAmount(Double.parseDouble(pAmount.getText().toString().trim()));
+                savePaymentInfoToFirebase(bill);
             }
         });
 
         bhomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), RenterHomePage.class));
+                Intent renterIntent = new Intent(getApplicationContext(), RenterHomePage.class);
+                renterIntent.putExtra("user", userObj); // Pass the User object to RentedHomePage
+                startActivity(renterIntent);
             }
         });
     }
 
-    private void savePaymentInfoToFirebase(PaymentInfo pInfo){
+    private void savePaymentInfoToFirebase(Bill pInfo){
         String userID = FirebaseAuth.getInstance().getUid();
         fStore.collection("users").document(userID).collection("payments").add(pInfo).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override

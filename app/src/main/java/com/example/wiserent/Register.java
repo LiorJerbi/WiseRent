@@ -36,7 +36,6 @@ public class Register extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     ProgressBar progressBar;
-    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,12 +92,13 @@ public class Register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(Register.this, "המשתמש נוצר.", Toast.LENGTH_SHORT).show();
-                            userID = fAuth.getCurrentUser().getUid();
+                            String userID = fAuth.getCurrentUser().getUid();
+
+                            //create new User instance
+                            User user = new User(userID, fullName, email, phone);
+
+                            //save user data to Firestore
                             DocumentReference documentReference = fStore.collection("users").document(userID);
-                            Map<String,Object> user = new HashMap<>();
-                            user.put("fullname",fullName);
-                            user.put("email",email);
-                            user.put("phone",phone);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
@@ -110,7 +110,11 @@ public class Register extends AppCompatActivity {
                                     Log.d("TAG","onFailiure: "+e.toString());
                                 }
                             });
-                            startActivity(new Intent(getApplicationContext(), PremissionType.class));
+                            //Moves to next activity and passes the user info.
+                            Intent intent = new Intent(getApplicationContext(), PremissionType.class);
+                            intent.putExtra("user",user);
+                            startActivity(intent);
+
                         }
                         else{
                             Toast.makeText(Register.this,"שגיאה!" + task.getException().getMessage(),Toast.LENGTH_SHORT).show();

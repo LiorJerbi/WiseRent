@@ -15,6 +15,18 @@
         android:theme="@style/Theme.WiseRent"
         tools:targetApi="31">
         <activity
+            android:name=".ModifyProperty"
+            android:exported="false" />
+        <activity
+            android:name=".RemoveAsset"
+            android:exported="false" />
+        <activity
+            android:name=".NewAsset"
+            android:exported="false" />
+        <activity
+            android:name=".AssetCustomize"
+            android:exported="false" />
+        <activity
             android:name=".paymentRequest"
             android:exported="false" />
         <activity
@@ -52,13 +64,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

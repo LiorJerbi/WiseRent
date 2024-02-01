@@ -71,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/trackingAppealsBtn" />
 
     <Button
-        android:id="@+id/paymentBtn"
+        android:id="@+id/assetCustomizeBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -92,7 +92,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/paymentBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/assetCustomizeBtn" />
 
     <ImageButton
         android:id="@+id/homeBtn"

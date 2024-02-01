@@ -25,12 +25,17 @@ public class RentedHomePage extends AppCompatActivity {
     String userID;
     Button bLogOutBtn;
     ImageButton bUserBtn;
+    User user, userObj; //user is for getting data from the database, userObj is the object we get from last screen
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rented_home_page);
+
+        // Retrieve the User object passed from the previous activity
+        Intent intent = getIntent();
+        userObj = (User) intent.getSerializableExtra("user");
 
         fullName = findViewById(R.id.Name);
         bLogOutBtn = findViewById(R.id.logoutBtn);
@@ -46,7 +51,8 @@ public class RentedHomePage extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if(value != null && value.exists()){
-                    fullName.setText(value.getString("fullname"));          //extracting the user's full name from DB
+                    user = value.toObject(User.class);
+                    fullName.setText(user.getFullName());          //extracting the user's full name from DB
                 }
                 else{
                     fullName.setText("User not found");

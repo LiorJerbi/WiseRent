@@ -10,13 +10,17 @@ import android.widget.ImageButton;
 public class AppealTrackRenter extends AppCompatActivity {
 
     ImageButton bhomeBtn;
+    User userObj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appeal_track_renter);
 
-        bhomeBtn = findViewById(R.id.homeBtn);
+        // Retrieve the User object passed from the previous activity
+        Intent intent = getIntent();
+        userObj = (User) intent.getSerializableExtra("user");
 
+        bhomeBtn = findViewById(R.id.homeBtn);
 
 
 
@@ -24,7 +28,9 @@ public class AppealTrackRenter extends AppCompatActivity {
         bhomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), RenterHomePage.class));
+                Intent renterIntent = new Intent(getApplicationContext(), RenterHomePage.class);
+                renterIntent.putExtra("user", userObj); // Pass the User object to RentedHomePage
+                startActivity(renterIntent);
             }
         });
     }
