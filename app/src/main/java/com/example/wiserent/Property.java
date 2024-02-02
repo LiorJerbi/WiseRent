@@ -8,12 +8,14 @@ public class Property implements Serializable {
     private String address;
     private double rentAmount;
     private String renterId;
+    private String rentedID;
 
     public Property(String propertyId, String address, double rentAmount, String renterId) {
         this.propertyId = propertyId;
         this.address = address;
         this.rentAmount = rentAmount;
         this.renterId = renterId;
+        this.rentedID = null;
     }
 
     public Property(){}
@@ -48,6 +50,14 @@ public class Property implements Serializable {
 
     public void setRenterId(String renterId) {
         this.renterId = renterId;
+    }
+
+    public String getRentedID() {
+        return rentedID;
+    }
+
+    public void setRentedID(String rentedID) {
+        this.rentedID = rentedID;
     }
 
     @Override

@@ -1,13 +1,19 @@
 package com.example.wiserent;
 
-public class Appeal {
+import java.io.Serializable;
+
+public class Appeal implements Serializable {
 
     private String appealId;
     private String type; // Bill/Professional
+    private String propertyID;
 
 
     public Appeal(String type) {
         this.type = type;
+    }
+    public Appeal(){
+
     }
 
     public String getAppealId() {
@@ -24,5 +30,13 @@ public class Appeal {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getPropertyID() {
+        return propertyID;
+    }
+
+    public void setPropertyID(String propertyID) {
+        this.propertyID = propertyID;
     }
 }

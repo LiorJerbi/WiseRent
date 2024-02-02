@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -65,6 +66,7 @@ public class NewAsset extends AppCompatActivity {
                                                 .document(documentReference.getId())
                                                 .update("propertyId", documentReference.getId())
                                                 .addOnSuccessListener(aVoid1 -> {
+                                                    Toast.makeText(NewAsset.this, "נכס הוסף בהצלחה", Toast.LENGTH_SHORT).show();
                                                     // Return to the RenterHomePage
                                                     Intent renterIntent = new Intent(getApplicationContext(), RenterHomePage.class);
                                                     renterIntent.putExtra("user", userObj);

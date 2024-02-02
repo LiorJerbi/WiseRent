@@ -30,6 +30,7 @@ public class paymentRequest extends AppCompatActivity {
     EditText pAmount;
     Bill bill;
     User userObj;
+    Property selectedProperty;
     FirebaseFirestore fStore;
 
 
@@ -41,6 +42,8 @@ public class paymentRequest extends AppCompatActivity {
         // Retrieve the User object passed from the previous activity
         Intent intent = getIntent();
         userObj = (User) intent.getSerializableExtra("user");
+        selectedProperty = (Property) intent.getSerializableExtra("selectedProperty");
+
 
         bhomeBtn = findViewById(R.id.homeBtn);
         bfinishBtn = findViewById(R.id.finishBtn);
@@ -94,7 +97,7 @@ public class paymentRequest extends AppCompatActivity {
                     Toast.makeText(paymentRequest.this, "הזן סכום לתשלום", Toast.LENGTH_SHORT).show();
                 } else {
                     bill.setAmount(Double.parseDouble(pAmount.getText().toString().trim()));
-                    savePaymentInfoToFirebase(bill);
+                    savePaymentInfoToFirebase(bill,selectedProperty);
                 }
             }
         });
@@ -109,53 +112,29 @@ public class paymentRequest extends AppCompatActivity {
         });
     }
 
-    private void savePaymentInfoToFirebase(Bill pInfo){
-//        String userID = FirebaseAuth.getInstance().getUid();
-//        fStore.collection("users").document(userID).collection("payments").add(pInfo).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//            @Override
-//            public void onSuccess(DocumentReference documentReference) {
-//                Toast.makeText(paymentRequest.this,"חיוב נוסף בהצלחה!",Toast.LENGTH_SHORT).show();
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(paymentRequest.this,"שגיאה!" + e.toString(),Toast.LENGTH_SHORT).show();
-//            }
-//        });
-        // Get the user's document reference
-        DocumentReference userReference = fStore.collection("users").document(userObj.getUserId());
-
-        // Create a new appeal document under the "appeals" subcollection of the user
-        DocumentReference appealReference = userReference.collection("appeals").document();
+    private void savePaymentInfoToFirebase(Bill pInfo, Property selectedProperty) {
+        // Create a new appeal document under the "appeals" collection
+        DocumentReference appealReference = fStore.collection("appeals").document();
 
         // Set the appealId to the generated document ID
         pInfo.setAppealId(appealReference.getId());
 
+        // Set the propertyId in the appeal
+        pInfo.setPropertyID(selectedProperty.getPropertyId());
+
+        // Add the Bill to the user's local list of appeals
+        userObj.addAppeal(pInfo);
+
+        // Update the user's appeal list in the user document
+        updateAppealListInUserDocument(userObj);
+
+        // Save the Bill to the appeals collection
         appealReference.set(pInfo)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(paymentRequest.this, "חיוב נוסף בהצלחה!", Toast.LENGTH_SHORT).show();
-
-                        // Add the Bill to the user's list of appeals
-                        userObj.addAppeal(pInfo);
-
-                        // Update the user's data in Firebase with the new list of appeals
-                        userReference.update("appeals", userObj.getAppeals())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        // The user's data has been successfully updated in Firebase
-                                        Toast.makeText(paymentRequest.this, "מידע משתמש נערך בהצלחה!", Toast.LENGTH_SHORT).show();
-                                        Log.d("PaymentRequest", "User data updated successfully");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.e("PaymentRequest", "Failed to update user data", e);
-                                    }
-                                });
+                        Log.d("PaymentRequest", "Appeal stored in separate collection, user appeal list updated locally and in the database");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -165,4 +144,26 @@ public class paymentRequest extends AppCompatActivity {
                     }
                 });
     }
+
+    private void updateAppealListInUserDocument(User user) {
+        // Get the user's document reference
+        DocumentReference userReference = fStore.collection("users").document(user.getUserId());
+
+        // Update the user's appeal list in the user document
+        userReference.update("appeals", user.getAppeals())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // The user's appeal list has been successfully updated in Firebase
+                        Log.d("PaymentRequest", "User appeal list updated successfully in the database");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("PaymentRequest", "Failed to update user appeal list in the database", e);
+                    }
+                });
+    }
+
 }
