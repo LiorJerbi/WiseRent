@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundwallp"
+    tools:context=".AppealTrackRented">
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="8dp"
+        android:stretchColumns="*"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/newAppeal"
+        app:layout_constraintVertical_bias="0.0">
+
+        <!-- Table Headers -->
+        <TableRow android:layout_height="52dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="טופל"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="חודש"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="סוג"
+                android:textAlignment="center" />
+        </TableRow>
+
+        <!-- Row 1 -->
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/payment1Btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="לתשלום"
+                android:textAlignment="center"
+                 />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="January"
+                android:textAlignment="center" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:text="Type 1"
+                android:textAlignment="center" />
+
+
+
+
+        </TableRow>
+
+        <!-- Row 2 -->
+        <TableRow>
+
+            <Button
+                android:id="@+id/payment2Btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="לתשלום"
+                android:textAlignment="center"
+                 />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="February"
+                android:textAlignment="center" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Type 2"
+                android:textAlignment="center" />
+
+
+
+
+        </TableRow>
+
+        <!-- Row 3 -->
+        <TableRow>
+            <Button
+                android:id="@+id/payment3Btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="לתשלום"
+                android:textAlignment="center"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="February"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Type 2"
+                android:textAlignment="center" />
+
+
+
+        </TableRow>
+    </TableLayout>
+
+    <ImageView
+        android:id="@+id/appLogo"
+        android:layout_width="129dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/wiserentlogo" />
+
+    <ImageButton
+        android:id="@+id/userBtn"
+        android:layout_width="50dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="User button for rented homepage"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/usericon" />
+
+    <TextView
+        android:id="@+id/newAppeal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="164dp"
+        android:fontFamily="sans-serif-black"
+        android:text="תשלומים"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appLogo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

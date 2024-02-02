@@ -23,7 +23,7 @@ public class RentedHomePage extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
-    Button bLogOutBtn;
+    Button bLogOutBtn,bNewAppealBtn,bpaymentBtn;
     ImageButton bUserBtn;
     User user, userObj; //user is for getting data from the database, userObj is the object we get from last screen
 
@@ -40,6 +40,8 @@ public class RentedHomePage extends AppCompatActivity {
         fullName = findViewById(R.id.Name);
         bLogOutBtn = findViewById(R.id.logoutBtn);
         bUserBtn = findViewById(R.id.userBtn);
+        bNewAppealBtn = findViewById(R.id.newAppealBtn);
+        bpaymentBtn = findViewById(R.id.paymentBtn);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -60,6 +62,16 @@ public class RentedHomePage extends AppCompatActivity {
             }
         });
 
+        bpaymentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent RentedPaymentPage = new Intent(getApplicationContext(), RentedPaymentPage.class);
+                RentedPaymentPage.putExtra("user", userObj); // Pass the User object to NewAppeal of renter
+                startActivity(RentedPaymentPage);
+
+            }
+        });
         bLogOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +83,15 @@ public class RentedHomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), RentedHomePage.class));
+            }
+        });
+
+        bNewAppealBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newAppealIntent = new Intent(getApplicationContext(), NewAppealRented.class);
+                newAppealIntent.putExtra("user", userObj); // Pass the User object to NewAppeal of renter
+                startActivity(newAppealIntent);
             }
         });
     }
