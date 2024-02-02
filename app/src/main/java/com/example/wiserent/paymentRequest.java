@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -87,8 +89,13 @@ public class paymentRequest extends AppCompatActivity {
         bfinishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bill.setAmount(Double.parseDouble(pAmount.getText().toString().trim()));
-                savePaymentInfoToFirebase(bill);
+                // Check for empty or inappropriate data
+                if (TextUtils.isEmpty(pAmount.getText().toString().trim())) {
+                    Toast.makeText(paymentRequest.this, "הזן סכום לתשלום", Toast.LENGTH_SHORT).show();
+                } else {
+                    bill.setAmount(Double.parseDouble(pAmount.getText().toString().trim()));
+                    savePaymentInfoToFirebase(bill);
+                }
             }
         });
 
@@ -103,17 +110,59 @@ public class paymentRequest extends AppCompatActivity {
     }
 
     private void savePaymentInfoToFirebase(Bill pInfo){
-        String userID = FirebaseAuth.getInstance().getUid();
-        fStore.collection("users").document(userID).collection("payments").add(pInfo).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-            @Override
-            public void onSuccess(DocumentReference documentReference) {
-                Toast.makeText(paymentRequest.this,"חיוב נוסף בהצלחה!",Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(paymentRequest.this,"שגיאה!" + e.toString(),Toast.LENGTH_SHORT).show();
-            }
-        });
+//        String userID = FirebaseAuth.getInstance().getUid();
+//        fStore.collection("users").document(userID).collection("payments").add(pInfo).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//            @Override
+//            public void onSuccess(DocumentReference documentReference) {
+//                Toast.makeText(paymentRequest.this,"חיוב נוסף בהצלחה!",Toast.LENGTH_SHORT).show();
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(paymentRequest.this,"שגיאה!" + e.toString(),Toast.LENGTH_SHORT).show();
+//            }
+//        });
+        // Get the user's document reference
+        DocumentReference userReference = fStore.collection("users").document(userObj.getUserId());
+
+        // Create a new appeal document under the "appeals" subcollection of the user
+        DocumentReference appealReference = userReference.collection("appeals").document();
+
+        // Set the appealId to the generated document ID
+        pInfo.setAppealId(appealReference.getId());
+
+        appealReference.set(pInfo)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(paymentRequest.this, "חיוב נוסף בהצלחה!", Toast.LENGTH_SHORT).show();
+
+                        // Add the Bill to the user's list of appeals
+                        userObj.addAppeal(pInfo);
+
+                        // Update the user's data in Firebase with the new list of appeals
+                        userReference.update("appeals", userObj.getAppeals())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        // The user's data has been successfully updated in Firebase
+                                        Toast.makeText(paymentRequest.this, "מידע משתמש נערך בהצלחה!", Toast.LENGTH_SHORT).show();
+                                        Log.d("PaymentRequest", "User data updated successfully");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e("PaymentRequest", "Failed to update user data", e);
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(paymentRequest.this, "שגיאה!" + e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
