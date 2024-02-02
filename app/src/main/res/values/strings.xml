@@ -8,4 +8,6 @@
         <item>טכנאי</item>
         <!-- Add more professional types as needed -->
     </string-array>
+    <string name="newAppeal">פנייה חדשה</string>
+
 </resources>
