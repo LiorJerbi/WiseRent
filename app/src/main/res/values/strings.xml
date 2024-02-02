@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">WiseRent</string>
+    <string-array name="professional_types_array">
+        <item>חשמלאי</item>
+        <item>אינסטלטור</item>
+        <item>מדביר</item>
+        <item>הנדימן</item>
+        <item>טכנאי</item>
+        <!-- Add more professional types as needed -->
+    </string-array>
 </resources>

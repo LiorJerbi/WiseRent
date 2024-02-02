@@ -26,7 +26,7 @@ public class RenterHomePage extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
-    Button bLogoutBtn , bNewAppealBtn, bAssetCustomizeBtn;
+    Button bLogoutBtn , bNewAppealBtn, bAssetCustomizeBtn, bTrackingAppealsBtn;
     ImageButton bHomeBtn;
     User user, userObj; //user is for getting data from the database, userObj is the object we get from last screen
 
@@ -44,6 +44,7 @@ public class RenterHomePage extends AppCompatActivity {
         bHomeBtn = findViewById(R.id.homeBtn);
         bNewAppealBtn = findViewById(R.id.newAppealBtn);
         bAssetCustomizeBtn = findViewById(R.id.assetCustomizeBtn);
+        bTrackingAppealsBtn = findViewById(R.id.trackingAppealsBtn);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -94,6 +95,15 @@ public class RenterHomePage extends AppCompatActivity {
                 Intent assetCustomizeIntent = new Intent(getApplicationContext(), AssetCustomize.class);
                 assetCustomizeIntent.putExtra("user", userObj); // Pass the User object to asset customize of renter
                 startActivity(assetCustomizeIntent);
+            }
+        });
+
+        bTrackingAppealsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent appealTrackCustomizeIntent = new Intent(getApplicationContext(), AppealTrackRenter.class);
+                appealTrackCustomizeIntent.putExtra("user", userObj); // Pass the User object to appeal track of renter
+                startActivity(appealTrackCustomizeIntent);
             }
         });
     }

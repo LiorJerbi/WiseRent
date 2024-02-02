@@ -72,8 +72,8 @@ public class NewAppealRenter extends AppCompatActivity {
         bdateAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent proAppointIntent = new Intent(getApplicationContext(), RenterHomePage.class);
-                proAppointIntent.putExtra("user", userObj); // Pass the User object to RentedHomePage
+                Intent proAppointIntent = new Intent(getApplicationContext(), ProfAppointmentDate.class);
+                proAppointIntent.putExtra("user", userObj); // Pass the User object to Professional Appointment Date
                 proAppointIntent.putExtra("selectedProperty", (Property) propertySpinner.getSelectedItem());
                 startActivity(proAppointIntent);
             }
