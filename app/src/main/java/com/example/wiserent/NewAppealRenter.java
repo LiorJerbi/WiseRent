@@ -74,6 +74,7 @@ public class NewAppealRenter extends AppCompatActivity {
             public void onClick(View v) {
                 Intent proAppointIntent = new Intent(getApplicationContext(), RenterHomePage.class);
                 proAppointIntent.putExtra("user", userObj); // Pass the User object to RentedHomePage
+                proAppointIntent.putExtra("selectedProperty", (Property) propertySpinner.getSelectedItem());
                 startActivity(proAppointIntent);
             }
         });

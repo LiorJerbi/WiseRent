@@ -4,9 +4,9 @@ public class ProfessionalAppointment extends Appeal{
 
     private String professionalType;
     private String date;
-    private String status;
+    private boolean status;
 
-    public ProfessionalAppointment(String professionalType, String date, String status) {
+    public ProfessionalAppointment(String professionalType, String date, boolean status) {
         super("Professional Appointment");
         this.professionalType = professionalType;
         this.date = date;
@@ -33,11 +33,11 @@ public class ProfessionalAppointment extends Appeal{
         this.date = date;
     }
 
-    public String getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 }

@@ -15,6 +15,9 @@
         android:theme="@style/Theme.WiseRent"
         tools:targetApi="31">
         <activity
+            android:name=".ProfAppointmentDate"
+            android:exported="false" />
+        <activity
             android:name=".ModifyProperty"
             android:exported="false" />
         <activity

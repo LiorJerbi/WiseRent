@@ -98,6 +98,9 @@ public class paymentRequest extends AppCompatActivity {
                 } else {
                     bill.setAmount(Double.parseDouble(pAmount.getText().toString().trim()));
                     savePaymentInfoToFirebase(bill,selectedProperty);
+                    Intent newApprenterIntent = new Intent(getApplicationContext(), NewAppealRenter.class);
+                    newApprenterIntent.putExtra("user", userObj); // Pass the User object to New appeal renter
+                    startActivity(newApprenterIntent);
                 }
             }
         });
