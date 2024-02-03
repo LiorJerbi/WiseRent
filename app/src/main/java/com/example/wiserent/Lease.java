@@ -2,15 +2,17 @@ package com.example.wiserent;
 
 public class Lease {
     private String leaseId;
-    private Property property;
+    private String propertyId;
     private  String renterId;   // the lessor of the property
     private String rentedId;  //the lessee of the property
+    private boolean status;
 
-    public Lease(String leaseId, Property property, String renterId, String rentedId) {
+    public Lease(String leaseId, String propertyId, String renterId, String rentedId,boolean status) {
         this.leaseId = leaseId;
-        this.property = property;
+        this.propertyId = propertyId;
         this.renterId = renterId;
         this.rentedId = rentedId;
+        this.status = status;
     }
 
     public String getLeaseId() {
@@ -21,12 +23,12 @@ public class Lease {
         this.leaseId = leaseId;
     }
 
-    public Property getProperty() {
-        return property;
+    public String getPropertyId() {
+        return propertyId;
     }
 
-    public void setProperty(Property property) {
-        this.property = property;
+    public void setPropertyId(String propertyId) {
+        this.propertyId = propertyId;
     }
 
     public String getRenterId() {
@@ -43,5 +45,13 @@ public class Lease {
 
     public void setRentedId(String rentedId) {
         this.rentedId = rentedId;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

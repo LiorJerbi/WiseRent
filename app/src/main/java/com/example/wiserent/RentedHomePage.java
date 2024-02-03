@@ -23,9 +23,10 @@ public class RentedHomePage extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
-    Button bLogOutBtn,bNewAppealBtn,bpaymentBtn;
+    Button bLogOutBtn,bNewAppealBtn,bpaymentBtn,bnewLeaseReqBtn;
     ImageButton bUserBtn;
     User user, userObj; //user is for getting data from the database, userObj is the object we get from last screen
+
 
 
     @Override
@@ -33,15 +34,19 @@ public class RentedHomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rented_home_page);
 
+
         // Retrieve the User object passed from the previous activity
         Intent intent = getIntent();
         userObj = (User) intent.getSerializableExtra("user");
+
 
         fullName = findViewById(R.id.Name);
         bLogOutBtn = findViewById(R.id.logoutBtn);
         bUserBtn = findViewById(R.id.userBtn);
         bNewAppealBtn = findViewById(R.id.newAppealBtn);
         bpaymentBtn = findViewById(R.id.paymentBtn);
+        bnewLeaseReqBtn = findViewById(R.id.newLeaseReqBtn);
+
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -82,7 +87,9 @@ public class RentedHomePage extends AppCompatActivity {
         bUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), RentedHomePage.class));
+                Intent userbtn = new Intent(getApplicationContext(), RentedHomePage.class);
+                userbtn.putExtra("user", userObj);
+                startActivity(userbtn);
             }
         });
 
@@ -92,6 +99,15 @@ public class RentedHomePage extends AppCompatActivity {
                 Intent newAppealIntent = new Intent(getApplicationContext(), NewAppealRented.class);
                 newAppealIntent.putExtra("user", userObj); // Pass the User object to NewAppeal of renter
                 startActivity(newAppealIntent);
+            }
+        });
+
+        bnewLeaseReqBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newLeaseIntent = new Intent(getApplicationContext(), NewLeaseReq.class);
+                newLeaseIntent.putExtra("user", userObj); // Pass the User object to NewLease of rented
+                startActivity(newLeaseIntent);
             }
         });
     }

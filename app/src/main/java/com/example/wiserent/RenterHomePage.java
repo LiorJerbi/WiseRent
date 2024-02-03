@@ -26,7 +26,7 @@ public class RenterHomePage extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
-    Button bLogoutBtn , bNewAppealBtn, bAssetCustomizeBtn, bTrackingAppealsBtn;
+    Button bLogoutBtn , bNewAppealBtn, bAssetCustomizeBtn, bTrackingAppealsBtn,bpropertyReqBtn;
     ImageButton bHomeBtn;
     User user, userObj; //user is for getting data from the database, userObj is the object we get from last screen
 
@@ -45,6 +45,7 @@ public class RenterHomePage extends AppCompatActivity {
         bNewAppealBtn = findViewById(R.id.newAppealBtn);
         bAssetCustomizeBtn = findViewById(R.id.assetCustomizeBtn);
         bTrackingAppealsBtn = findViewById(R.id.trackingAppealsBtn);
+        bpropertyReqBtn = findViewById(R.id.propertyReqBtn);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -65,13 +66,21 @@ public class RenterHomePage extends AppCompatActivity {
             }
         });
 
+        bpropertyReqBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent LeaseIntent = new Intent(getApplicationContext(), RenterLeasePage.class);
+                LeaseIntent.putExtra("user", userObj); // Pass the User object to RentedHomePage
+                startActivity(LeaseIntent);
+            }
+        });
+
         bLogoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 logout(v);
             }
         });
-
 
         bHomeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +90,7 @@ public class RenterHomePage extends AppCompatActivity {
                 startActivity(renterIntent);
             }
         });
+
         bNewAppealBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

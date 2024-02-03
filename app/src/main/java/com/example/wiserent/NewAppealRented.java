@@ -13,7 +13,7 @@ import android.widget.Spinner;
 
 public class NewAppealRented extends AppCompatActivity {
     EditText appealEditText;
-    ImageButton bUserBtn;
+    ImageButton buserBtn;
     Button bsendAppealBtn;
 //    Spinner workerTypeSpinner;
     User userObj;
@@ -25,7 +25,7 @@ public class NewAppealRented extends AppCompatActivity {
         // Retrieve the User object passed from the previous activity
         Intent intent = getIntent();
         userObj = (User) intent.getSerializableExtra("user");
-        bUserBtn = findViewById(R.id.userBtn);
+        buserBtn = findViewById(R.id.userBtn);
         bsendAppealBtn = findViewById(R.id.sendAppealBtn);
         appealEditText = findViewById(R.id.appealEditText);
 
@@ -36,10 +36,12 @@ public class NewAppealRented extends AppCompatActivity {
 
 
 
-        bUserBtn.setOnClickListener(new View.OnClickListener() {
+        buserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), RentedHomePage.class));
+                Intent userbtn = new Intent(getApplicationContext(), RentedHomePage.class);
+                userbtn.putExtra("user", userObj);
+                startActivity(userbtn);
             }
         });
 

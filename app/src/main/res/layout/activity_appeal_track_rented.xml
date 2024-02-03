@@ -7,14 +7,7 @@
     android:background="@drawable/backgroundwallp"
     tools:context=".AppealTrackRented">
 
-    <ImageView
-        android:id="@+id/appLogo"
-        android:layout_width="129dp"
-        android:layout_height="63dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/wiserentlogo" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

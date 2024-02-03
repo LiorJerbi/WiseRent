@@ -102,19 +102,19 @@ public class User implements Serializable {
 
     // Method to remove a leased property based on its propertyId
     public void removeLeasedProperty(String propertyId) {
-        leasedProperties.removeIf(lease -> lease.getProperty().getPropertyId().equals(propertyId));
+        leasedProperties.removeIf(lease -> lease.getPropertyId().equals(propertyId));
     }
 
     // Method to edit details of a leased property based on its propertyId
-    public void editLeasedProperty(String propertyId, String newAddress, double newRentAmount) {
-        for (Lease lease : leasedProperties) {
-            if (lease.getProperty().getPropertyId().equals(propertyId)) {
-                lease.getProperty().setAddress(newAddress);
-                lease.getProperty().setRentAmount(newRentAmount);
-                break;
-            }
-        }
-    }
+//    public void editLeasedProperty(String propertyId, String newAddress, double newRentAmount) {
+//        for (Lease lease : leasedProperties) {
+//            if (lease.getProperty().getPropertyId().equals(propertyId)) {
+//                lease.getProperty().setAddress(newAddress);
+//                lease.getProperty().setRentAmount(newRentAmount);
+//                break;
+//            }
+//        }
+//    }
     public List<Appeal> getAppeals() {
         return appeals;
     }

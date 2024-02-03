@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 
 public class RentedPaymentPage extends AppCompatActivity {
 
-    ImageButton buserBtn;
+    ImageButton bUserBtn;
     Button bpayment1Btn, bpayment2Btn ,bpayment3Btn;
     User userObj;
 
@@ -21,15 +21,17 @@ public class RentedPaymentPage extends AppCompatActivity {
         // Retrieve the User object passed from the previous activity
         Intent intent = getIntent();
         userObj = (User) intent.getSerializableExtra("user");
-        buserBtn = findViewById(R.id.userBtn);
+        bUserBtn = findViewById(R.id.userBtn);
         bpayment1Btn = findViewById(R.id.payment1Btn);
         bpayment2Btn = findViewById(R.id.payment2Btn);
         bpayment3Btn = findViewById(R.id.payment3Btn);
 
-        buserBtn.setOnClickListener(new View.OnClickListener() {
+        bUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), RentedHomePage.class));
+                Intent userbtn = new Intent(getApplicationContext(), RentedHomePage.class);
+                userbtn.putExtra("user", userObj);
+                startActivity(userbtn);
             }
         });
 
