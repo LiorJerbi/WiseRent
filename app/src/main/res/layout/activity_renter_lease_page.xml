@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/appLogo"
-        android:layout_width="129dp"
-        android:layout_height="63dp"
+        android:layout_width="50dp"
+        android:layout_height="58dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,8 +30,53 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/homeicon" />
 
+    <LinearLayout
+        android:layout_width="399dp"
+        android:layout_height="574dp"
+        android:layout_marginTop="68dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appLogo">
 
+        <!-- Add your other elements or views above the TableLayout if needed -->
 
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
+
+            <!-- Table header row -->
+            <TableRow>
+
+                <TextView
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="דחה" />
+
+                <TextView
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="אפשר" />
+
+                <TextView
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="כתובת השולח" />
+
+                <TextView
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:text="שם המשכיר" />
+
+            </TableRow>
+
+            <!-- Dynamic rows will be added here -->
+
+        </TableLayout>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
