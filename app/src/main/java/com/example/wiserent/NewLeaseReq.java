@@ -58,7 +58,7 @@ public class NewLeaseReq extends AppCompatActivity {
                 // Handle property click, store the propertyId
 
                 selectedPropertyId = propertyId;
-                Toast.makeText(NewLeaseReq.this, "הנכס הנבחר "+selectedPropertyId, Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewLeaseReq.this, "הנכס נבחר", Toast.LENGTH_SHORT).show();
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -160,14 +160,6 @@ public class NewLeaseReq extends AppCompatActivity {
                     Toast.makeText(NewLeaseReq.this, "Error sending lease request", Toast.LENGTH_SHORT).show();;
                 });
 
-                // Add the lease request to the "requests" collection
-        fStore.collection("requests")
-                .add(lease)
-                .addOnSuccessListener(documentReference -> {
-                    Toast.makeText(NewLeaseReq.this, "Lease request sent successfully", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(NewLeaseReq.this, "Error sending lease request", Toast.LENGTH_SHORT).show();
-                });
+
     }
 }

@@ -146,10 +146,10 @@ public class RenterLeasePage extends AppCompatActivity {
                                 });
 
                                 // Add TextViews and Buttons to the row
-                                row.addView(rentedNameTextView);
-                                row.addView(propertyAddressTextView);
-                                row.addView(enableButton);
                                 row.addView(denyButton);
+                                row.addView(enableButton);
+                                row.addView(propertyAddressTextView);
+                                row.addView(rentedNameTextView);
 
                                 // Add the row to the table
                                 tableLayout.addView(row);
@@ -221,7 +221,7 @@ public class RenterLeasePage extends AppCompatActivity {
     private void updatePropertyInFirebase(String propertyId,String rentedId) {
 
         fStore.collection("properties").document(propertyId)
-                .update("renterdId", rentedId)
+                .update("rentedId", rentedId)
                 .addOnSuccessListener(aVoid -> {
                     // Property updated successfully
                     Toast.makeText(RenterLeasePage.this, "הפרטים עודכנו בהצלחה", Toast.LENGTH_SHORT).show();

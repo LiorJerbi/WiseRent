@@ -14,6 +14,9 @@ public class Lease {
         this.rentedId = rentedId;
         this.status = status;
     }
+    public Lease(){
+
+    }
 
     public String getLeaseId() {
         return leaseId;
