@@ -1,5 +1,7 @@
 package com.example.wiserent;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Property implements Serializable {
@@ -17,7 +19,6 @@ public class Property implements Serializable {
         this.renterId = renterId;
         this.rentedId = null;
     }
-
     public Property(){}
 
     public String getPropertyId() {
@@ -52,14 +53,15 @@ public class Property implements Serializable {
         this.renterId = renterId;
     }
 
-    public String getRentedID() {
+    public String getRentedId() {
         return rentedId;
     }
 
-    public void setRentedID(String rentedID) {
-        this.rentedId = rentedID;
+    public void setRentedId(String rentedId) {
+        this.rentedId = rentedId;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return address;
