@@ -6,7 +6,7 @@ public class Appeal implements Serializable {
 
     private String appealId;
     private String type; // Bill/Professional
-    private String propertyID;
+    private String propertyId;
 
 
     public Appeal(String type) {
@@ -32,11 +32,11 @@ public class Appeal implements Serializable {
         this.type = type;
     }
 
-    public String getPropertyID() {
-        return propertyID;
+    public String getPropertyId() {
+        return propertyId;
     }
 
-    public void setPropertyID(String propertyID) {
-        this.propertyID = propertyID;
+    public void setPropertyId(String propertyId) {
+        this.propertyId = propertyId;
     }
 }

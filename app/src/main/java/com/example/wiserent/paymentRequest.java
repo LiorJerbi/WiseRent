@@ -123,7 +123,7 @@ public class paymentRequest extends AppCompatActivity {
         pInfo.setAppealId(appealReference.getId());
 
         // Set the propertyId in the appeal
-        pInfo.setPropertyID(selectedProperty.getPropertyId());
+        pInfo.setPropertyId(selectedProperty.getPropertyId());
 
         // Add the Bill to the user's local list of appeals
         userObj.addAppeal(pInfo);

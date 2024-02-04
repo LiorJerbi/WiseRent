@@ -140,7 +140,7 @@ public class ProfAppointmentDate extends AppCompatActivity {
         // Set the appealId to the generated document ID
         profAppointment.setAppealId(appealReference.getId());
         // Set the propertyId in the appeal
-        profAppointment.setPropertyID(selectedProperty.getPropertyId());
+        profAppointment.setPropertyId(selectedProperty.getPropertyId());
         // Add the Bill to the user's local list of appeals
         userObj.addAppeal(profAppointment);
 

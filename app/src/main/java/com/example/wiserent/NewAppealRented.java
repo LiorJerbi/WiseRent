@@ -3,9 +3,12 @@ package com.example.wiserent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +24,7 @@ public class NewAppealRented extends AppCompatActivity {
     Button sendAppealBtn;
     User userObj;
     FirebaseFirestore fStore;
+    String selectedPropertyId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,28 @@ public class NewAppealRented extends AppCompatActivity {
         sendAppealBtn = findViewById(R.id.sendAppealBtn);
         appealEditText = findViewById(R.id.appealEditText);
         fStore = FirebaseFirestore.getInstance();
+
+
+
+// Populate the Spinner with the user's leased properties
+        LeaseAdapter leaseAdapter = new LeaseAdapter(this, userObj.getLeasedProperties(),fStore);
+        Spinner propertySpinner = findViewById(R.id.propertySpinner);
+        propertySpinner.setAdapter(leaseAdapter);
+
+        propertySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                Lease selectedLease = (Lease) parentView.getItemAtPosition(position);
+                // Now selectedLease holds the chosen Lease object
+                selectedPropertyId = selectedLease != null ? selectedLease.getPropertyId() : "";
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Do nothing here
+            }
+        });
+
 
         userBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,17 +81,20 @@ public class NewAppealRented extends AppCompatActivity {
                 GeneralProblem generalProblem = new GeneralProblem(appealText, false);
 
                 // Save the GeneralProblem appeal to Firebase
-                saveGeneralProblemToFirebase(generalProblem, userObj);
+                saveGeneralProblemToFirebase(generalProblem, userObj, selectedPropertyId);
             }
         });
     }
 
-    private void saveGeneralProblemToFirebase(GeneralProblem generalProblem, User userObj) {
+    private void saveGeneralProblemToFirebase(GeneralProblem generalProblem, User userObj ,String selectedPropertyId) {
         // Save the GeneralProblem appeal to the appeals collection
         DocumentReference appealReference = fStore.collection("appeals").document();
 
         // Set the appealId to the generated document ID
         generalProblem.setAppealId(appealReference.getId());
+
+        // Set the propertyId in the GeneralProblem
+        generalProblem.setPropertyId(selectedPropertyId);
 
         // Add the GeneralProblem to the user's local list of appeals
         userObj.addAppeal(generalProblem);

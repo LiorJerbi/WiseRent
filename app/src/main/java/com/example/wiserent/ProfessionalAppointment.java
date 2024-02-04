@@ -1,6 +1,8 @@
 package com.example.wiserent;
 
-public class ProfessionalAppointment extends Appeal{
+import java.io.Serializable;
+
+public class ProfessionalAppointment extends Appeal implements Serializable {
 
     private String professionalType;
     private String date;

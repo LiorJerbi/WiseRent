@@ -1,6 +1,8 @@
 package com.example.wiserent;
 
-public class Bill extends Appeal{
+import java.io.Serializable;
+
+public class Bill extends Appeal implements Serializable {
 //class to demonstrate Bill object extends Appeal
     private String month;
     private String billType;
