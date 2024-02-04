@@ -136,25 +136,23 @@ public class ProfAppointmentDate extends AppCompatActivity {
 
     private void saveProfessionalAppointmentToFirebase(ProfessionalAppointment profAppointment, Property selectedProperty) {
         // Save the ProfessionalAppointment to the appeals collection
-        fStore.collection("appeals")
-                .add(profAppointment)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        DocumentReference appealReference = fStore.collection("appeals").document();
+        // Set the appealId to the generated document ID
+        profAppointment.setAppealId(appealReference.getId());
+        // Set the propertyId in the appeal
+        profAppointment.setPropertyID(selectedProperty.getPropertyId());
+        // Add the Bill to the user's local list of appeals
+        userObj.addAppeal(profAppointment);
+
+        // Save the Bill to the appeals collection
+        appealReference.set(profAppointment)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        // Update the appealId in the ProfessionalAppointment object
-                        profAppointment.setAppealId(documentReference.getId());
-
-                        // Set the propertyId in the appeal
-                        profAppointment.setPropertyID(selectedProperty.getPropertyId());
-
-                        // Add the ProfessionalAppointment to the user's local list of appeals
-                        userObj.addAppeal(profAppointment);
-
-                        // Update the user's appeal list in the user document
-                        updateAppealListInUserDocument(userObj);
-
+                    public void onSuccess(Void unused) {
                         Toast.makeText(ProfAppointmentDate.this, "פגישה עם בעל מקצוע תואמה בהצלחה!", Toast.LENGTH_SHORT).show();
                         Log.d("ProfAppointmentDate", "Appointment stored in separate collection, user appeal list updated locally and in the database");
+                        // Update the user's appeal list in the user document
+                        updateAppealListInUserDocument(userObj);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
