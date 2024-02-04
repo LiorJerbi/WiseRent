@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -158,9 +159,16 @@ public class RentedHomePage extends AppCompatActivity {
 
                             if (lease != null && lease.isStatus()) {
                                 // Update the user's lease list
-                                updateLeaseList(lease);
+                                boolean check = true;
+                                for(Lease property: userObj.getLeasedProperties()) {
+                                    if (property.getLeaseId().equals(lease.getLeaseId())) {
+                                        check = false;
+                                    }
+                                }
+                                if(check){
+                                    updateLeaseList(lease);
+                                }
                             }
-
                         }
                     } else {
                         // Handle errors
@@ -174,7 +182,20 @@ public class RentedHomePage extends AppCompatActivity {
         handler.post(() -> {
             // Add the updated lease to the user's lease list
             userObj.addLease(lease);
-            Toast.makeText(RentedHomePage.this,"חוזה אושר",Toast.LENGTH_LONG).show();
+//            Toast.makeText(RentedHomePage.this,"חוזה אושר",Toast.LENGTH_LONG).show();
+            fStore.collection("users")
+                    .document(userObj.getUserId())
+                    .set(userObj)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d("RentedHomePage", "Add Successfully to User Collection ");
+                        }
+                    })
+                    .addOnFailureListener(e ->{
+                        Log.e("RentedHomePage","Fail to adding to User "+e.toString());
+                    });
+
         });
     }
 
