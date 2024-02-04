@@ -54,12 +54,12 @@ public class AppealTrackRented extends AppCompatActivity {
     private void populateAppealsTable() {
         // Get the TableLayout from the XML layout
         TableLayout tableLayout = findViewById(R.id.appealTableLayout);
-
+        Log.d("AppealTrackRented", "User leased properties: " + userObj.getLeasedProperties());
         // Iterate through the user's leased properties
         for (Lease leasedProperty : userObj.getLeasedProperties()) {
             // Get the propertyId
             String propertyId = leasedProperty.getPropertyId();
-
+            Log.d("AppealTrackRented", "Fetching appeals for property ID: " + leasedProperty.getPropertyId());
             // Query appeals collection for appeals with the current propertyId
             fStore.collection("appeals")
                     .whereEqualTo("propertyID", propertyId)
@@ -69,7 +69,7 @@ public class AppealTrackRented extends AppCompatActivity {
                             // Handle the results of the query
                             for (DocumentSnapshot document : task.getResult()) {
                                 Map<String, Object> appealData = document.getData();
-
+                                System.out.println(appealData.get("type"));
                                 // Determine the type of appeal
                                 String appealType = (String) appealData.get("type");
 

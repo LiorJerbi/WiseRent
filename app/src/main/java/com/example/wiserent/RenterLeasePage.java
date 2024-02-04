@@ -211,6 +211,7 @@ public class RenterLeasePage extends AppCompatActivity {
                 .addOnSuccessListener(aVoid -> {
                     // Lease updated successfully, now update the associated property
                     updatePropertyInFirebase(propertyId,rentedId);
+                    updateUserOwnedProperties(rentedId, propertyId);
                 })
                 .addOnFailureListener(e -> {
                     // Handle errors
@@ -231,6 +232,30 @@ public class RenterLeasePage extends AppCompatActivity {
                     Toast.makeText(RenterLeasePage.this, "שגיאה באישור הקישור", Toast.LENGTH_SHORT).show();
                 });
     }
+    private void updateUserOwnedProperties(String rentedId, String propertyId) {
+        // Update the user's (renterId) ownedProperties with the new rentedId
+        List<Property> ownedProperties = userObj.getOwnedProperties();
+        for (Property property : ownedProperties) {
+            if (property.getPropertyId().equals(propertyId)) {
+                property.setRentedId(rentedId);
+                break; // No need to continue once the property is found and updated
+            }
+        }
+
+        // Update the user object in Firebase (if needed)
+        fStore.collection("users").document(userObj.getUserId())
+                .update("ownedProperties", ownedProperties)
+                .addOnSuccessListener(aVoid -> {
+                    // User's ownedProperties updated successfully
+                    // You can perform additional actions here if needed
+                })
+                .addOnFailureListener(e -> {
+                    // Handle errors
+                    Toast.makeText(RenterLeasePage.this, "שגיאה בעדכון הנכס בבעלות המשתמש", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+
 
     private void refreshUI(TableRow row) {
         // Get the TableLayout from the XML layout
