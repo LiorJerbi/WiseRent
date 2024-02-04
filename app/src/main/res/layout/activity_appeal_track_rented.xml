@@ -6,6 +6,74 @@
     android:layout_height="match_parent"
     android:background="@drawable/backgroundwallp"
     tools:context=".AppealTrackRented">
+    <ImageView
+        android:id="@+id/appLogo"
+        android:layout_width="129dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/wiserentlogo" />
+
+    <ImageButton
+        android:id="@+id/userBtn"
+        android:layout_width="50dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Home button for renter homepage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/usericon" />
+
+    <!-- Add TableLayout for displaying appeals -->
+    <TableLayout
+        android:id="@+id/appealTableLayout"
+        android:layout_width="395dp"
+        android:layout_height="643dp"
+        android:layout_marginTop="20dp"
+        android:stretchColumns="*"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userBtn">
+
+        <!-- Table Header -->
+        <TableRow>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="פותח הפניה"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="תוכן הפניה"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="סטטוס"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="כתובת הנכס"
+                android:textStyle="bold" />
+        </TableRow>
+
+    </TableLayout>
 
 
 

@@ -1,6 +1,8 @@
 package com.example.wiserent;
 
-public class Lease {
+import java.io.Serializable;
+
+public class Lease implements Serializable {
     private String leaseId;
     private String propertyId;
     private  String renterId;   // the lessor of the property

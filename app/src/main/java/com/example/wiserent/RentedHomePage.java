@@ -31,7 +31,7 @@ public class RentedHomePage extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
-    Button bLogOutBtn,bNewAppealBtn,bpaymentBtn,bnewLeaseReqBtn;
+    Button bLogOutBtn,bNewAppealBtn,bpaymentBtn,bnewLeaseReqBtn,bTrackingAppealsBtn;
     ImageButton bUserBtn;
     User user, userObj; //user is for getting data from the database, userObj is the object we get from last screen
 
@@ -59,7 +59,7 @@ public class RentedHomePage extends AppCompatActivity {
         bNewAppealBtn = findViewById(R.id.newAppealBtn);
         bpaymentBtn = findViewById(R.id.paymentBtn);
         bnewLeaseReqBtn = findViewById(R.id.newLeaseReqBtn);
-
+        bTrackingAppealsBtn = findViewById(R.id.trackingAppealsBtn);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -81,7 +81,14 @@ public class RentedHomePage extends AppCompatActivity {
             }
         });
 
-
+        bTrackingAppealsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent AppealTrackRented = new Intent(getApplicationContext(),AppealTrackRented.class);
+                AppealTrackRented.putExtra("user", userObj); // Pass the User object to AppealTrackRented of renter
+                startActivity(AppealTrackRented);
+            }
+        });
         bpaymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +116,7 @@ public class RentedHomePage extends AppCompatActivity {
             }
         });
 
+
         bNewAppealBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +136,8 @@ public class RentedHomePage extends AppCompatActivity {
                 finish();
             }
         });
+
+
         // Initialize the handler for updating UI from background thread
         handler = new Handler(Looper.getMainLooper());
 
@@ -182,7 +192,7 @@ public class RentedHomePage extends AppCompatActivity {
         handler.post(() -> {
             // Add the updated lease to the user's lease list
             userObj.addLease(lease);
-//            Toast.makeText(RentedHomePage.this,"חוזה אושר",Toast.LENGTH_LONG).show();
+            Toast.makeText(RentedHomePage.this,"חוזה אושר",Toast.LENGTH_LONG).show();
             fStore.collection("users")
                     .document(userObj.getUserId())
                     .set(userObj)
