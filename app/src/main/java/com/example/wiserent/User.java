@@ -96,12 +96,12 @@ public class User implements Serializable {
     }
 
     // Method to add a leased property to the list of leased properties
-    public void addLeasedProperty(Lease lease) {
+    public void addLease(Lease lease) {
         leasedProperties.add(lease);
     }
 
     // Method to remove a leased property based on its propertyId
-    public void removeLeasedProperty(String propertyId) {
+    public void removeLease(String propertyId) {
         leasedProperties.removeIf(lease -> lease.getPropertyId().equals(propertyId));
     }
 
