@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
@@ -109,6 +110,9 @@ public class AppealTrackRented extends AppCompatActivity {
                                             addressTextView.setText(propertyName);
                                             contentTextView.setText(getContentText(appeal));
                                             statusTextView.setText(getStatusText(appeal));
+                                            // Align the status text to the center
+                                            statusTextView.setGravity(Gravity.CENTER); // This line aligns the text to the center
+
                                             getRenterName(appeal,leasedProperty.getRenterId(), renterName -> {
                                                 if (renterName != null) {
                                                     openedByTextView.setText(renterName);
