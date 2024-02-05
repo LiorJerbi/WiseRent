@@ -62,7 +62,7 @@ public class AppealTrackRented extends AppCompatActivity {
             Log.d("AppealTrackRented", "Fetching appeals for property ID: " + leasedProperty.getPropertyId());
             // Query appeals collection for appeals with the current propertyId
             fStore.collection("appeals")
-                    .whereEqualTo("propertyID", propertyId)
+                    .whereEqualTo("propertyId", propertyId)
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {

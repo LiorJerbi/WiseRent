@@ -63,7 +63,7 @@ public class AppealTrackRenter extends AppCompatActivity {
 
             // Query appeals collection for appeals with the current propertyId
             fStore.collection("appeals")
-                    .whereEqualTo("propertyID", propertyId)
+                    .whereEqualTo("propertyId", propertyId)
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
