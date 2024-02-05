@@ -13,9 +13,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -63,7 +61,7 @@ public class AppealTrackRenter extends AppCompatActivity {
 
             // Query appeals collection for appeals with the current propertyId
             fStore.collection("appeals")
-                    .whereEqualTo("propertyID", propertyId)
+                    .whereEqualTo("propertyId", propertyId)
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
@@ -109,16 +107,25 @@ public class AppealTrackRenter extends AppCompatActivity {
                                     addressTextView.setText(ownedProperty.getAddress());
                                     contentTextView.setText(getContentText(appeal));
                                     statusTextView.setText(getStatusText(appeal));
-                                    openedByTextView.setText(getOpenedByText(appeal,ownedProperty.getRentedId()));
 
-                                    // Add TextViews to the row
-                                    row.addView(openedByTextView);
-                                    row.addView(contentTextView);
-                                    row.addView(statusTextView);
-                                    row.addView(addressTextView);
+                                    // Call getRenterName to retrieve renter name
+                                    getRenterName(appeal, ownedProperty.getRentedId(), renterName -> {
+                                        if (renterName != null) {
+                                            // Set the renter name to the TextView
+                                            openedByTextView.setText(renterName);
+                                        } else {
+                                            openedByTextView.setText("Unknown Renter");
+                                        }
 
-                                    // Add the row to the table
-                                    tableLayout.addView(row);
+                                        // Add TextViews to the row
+                                        row.addView(openedByTextView);
+                                        row.addView(contentTextView);
+                                        row.addView(statusTextView);
+                                        row.addView(addressTextView);
+
+                                        // Add the row to the table
+                                        tableLayout.addView(row);
+                                    });
                                 }
                             }
                         } else {
@@ -132,12 +139,13 @@ public class AppealTrackRenter extends AppCompatActivity {
     private String getContentText(Appeal appeal) {
         if (appeal instanceof Bill) {
             Bill bill = (Bill) appeal;
-//            return "Bill - " + bill.getMonth() + " " + bill.getBillType();
             return bill.getBillType();
         } else if (appeal instanceof ProfessionalAppointment) {
             ProfessionalAppointment profAppointment = (ProfessionalAppointment) appeal;
-//            return "Professional Appointment - " + profAppointment.getProfessionalType() + " on " + profAppointment.getDate();
             return profAppointment.getProfessionalType();
+        } else if (appeal instanceof GeneralProblem) {
+            GeneralProblem generalProblem = (GeneralProblem) appeal;
+            return generalProblem.getContent();
         } else {
             return "Unknown Appeal Type";
         }
@@ -150,55 +158,35 @@ public class AppealTrackRenter extends AppCompatActivity {
             return ((ProfessionalAppointment) appeal).isStatus() ? "V" : "X";
         } else if (appeal instanceof GeneralProblem) {
             return ((GeneralProblem) appeal).isStatus() ? "V" : "X";
-        }
-        else {
+        } else {
             return "N/A";
         }
     }
 
-    private String getOpenedByText(Appeal appeal,String rentedId){
-        final String[] name = new String[1];
-        if(appeal instanceof GeneralProblem){
-            getNameRented(rentedId).addOnCompleteListener(new OnCompleteListener<String>() {
-                @Override
-                public void onComplete(@NonNull Task<String> task) {
-                    if(task.isSuccessful()){
-                        String fullName = task.getResult();
-                        if(fullName != null){
-                            name[0] = fullName;
-                        }else{
-                            Log.d("AppealTrackRenter", "full name import ERROR" );
-                        }
-                    }else {
-                        Log.d("AppealTrackRenter", "full name import ERROR(not successful" );
-                    }
-                }
-            });
-            return name[0];
-        }
-        else{
-            return userObj.getFullName();
-        }
-    }
-
-    private Task<String> getNameRented(String rentedId){
-        return fStore.collection("users").document(rentedId).get()
-                .continueWith(new Continuation<DocumentSnapshot, String>() {
-                    @Override
-                    public String then(@NonNull Task<DocumentSnapshot> task) throws Exception {
+    private void getRenterName(Appeal appeal, String renterId, Callback<String> callback) {
+        if (appeal instanceof GeneralProblem) {
+            fStore.collection("users").document(renterId).get()
+                    .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
-                                return document.getString("fullName");
-                            }else {
-                                Log.d("AppealTrackRenter", "getRentedName ERROR");
+                                callback.onCallback(document.getString("fullName"));
+                            } else {
+                                Log.d("AppealTrackRenter", "Failed to fetch renter name: Document does not exist");
+                                callback.onCallback(null);
                             }
-                        }else {
-                            Log.d("AppealTrackRenter", "getRentedName ERROR(not success");
+                        } else {
+                            Log.d("AppealTrackRenter", "Failed to fetch renter name: Task not successful");
+                            callback.onCallback(null);
                         }
-                        return null;
-                    }
-                });
+                    });
+        } else {
+            callback.onCallback(userObj.getFullName());
+        }
     }
 
+    // Interface for callback mechanism
+    interface Callback<T> {
+        void onCallback(T data);
+    }
 }

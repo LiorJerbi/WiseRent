@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Appeal implements Serializable {
 
     private String appealId;
-    private String type; // Bill/Professional
+    private String type; // Bill/Professional/GeneralProblem
     private String propertyId;
 
 

@@ -59,20 +59,18 @@ public class AppealTrackRented extends AppCompatActivity {
         for (Lease leasedProperty : userObj.getLeasedProperties()) {
             // Get the propertyId
             String propertyId = leasedProperty.getPropertyId();
-            Log.d("AppealTrackRented", "Fetching appeals for property ID: " + leasedProperty.getPropertyId());
+            Log.d("AppealTrackRented", "Fetching appeals for property ID: " + leasedProperty.getPropertyId() + " PropertyIdString:" +propertyId);
             // Query appeals collection for appeals with the current propertyId
             fStore.collection("appeals")
-                    .whereEqualTo("propertyID", propertyId)
+                    .whereEqualTo("propertyId", propertyId)
                     .get()
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             // Handle the results of the query
                             for (DocumentSnapshot document : task.getResult()) {
                                 Map<String, Object> appealData = document.getData();
-                                System.out.println(appealData.get("type"));
                                 // Determine the type of appeal
                                 String appealType = (String) appealData.get("type");
-
                                 // Create an Appeal object based on the type
                                 Appeal appeal;
                                 switch (appealType) {
@@ -86,7 +84,7 @@ public class AppealTrackRented extends AppCompatActivity {
                                         appeal = document.toObject(GeneralProblem.class);
                                         break;
                                     default:
-                                        appeal = null; // Handle other types as needed
+                                        appeal = null;
                                 }
 
                                 if (appeal != null) {
@@ -111,7 +109,7 @@ public class AppealTrackRented extends AppCompatActivity {
                                             addressTextView.setText(propertyName);
                                             contentTextView.setText(getContentText(appeal));
                                             statusTextView.setText(getStatusText(appeal));
-                                            getRenterName(leasedProperty.getRenterId(), renterName -> {
+                                            getRenterName(appeal,leasedProperty.getRenterId(), renterName -> {
                                                 if (renterName != null) {
                                                     openedByTextView.setText(renterName);
                                                 } else {
@@ -146,7 +144,11 @@ public class AppealTrackRented extends AppCompatActivity {
         } else if (appeal instanceof ProfessionalAppointment) {
             ProfessionalAppointment profAppointment = (ProfessionalAppointment) appeal;
             return profAppointment.getProfessionalType();
-        } else {
+        } else if (appeal instanceof GeneralProblem){
+            GeneralProblem generalProblem = (GeneralProblem) appeal;
+            return generalProblem.getContent();
+        }
+        else {
             return "Unknown Appeal Type";
         }
     }
@@ -169,7 +171,8 @@ public class AppealTrackRented extends AppCompatActivity {
                 });
     }
 
-    private void getRenterName(String renterId, Callback<String> callback) {
+    private void getRenterName(Appeal appeal, String renterId, Callback<String> callback) {
+        if(appeal instanceof Bill || appeal instanceof ProfessionalAppointment){
         fStore.collection("users").document(renterId).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -183,6 +186,52 @@ public class AppealTrackRented extends AppCompatActivity {
                     } else {
                         Log.d("AppealTrackRented", "Failed to fetch renter name: Task not successful");
                         callback.onCallback(null);
+                    }
+                });
+        }
+        else callback.onCallback(userObj.getFullName());
+    }
+
+    private String getOpenedByText(Appeal appeal,String rentedId){
+        final String[] name = new String[1];
+        if(appeal instanceof GeneralProblem){
+            getNameRented(rentedId).addOnCompleteListener(new OnCompleteListener<String>() {
+                @Override
+                public void onComplete(@NonNull Task<String> task) {
+                    if(task.isSuccessful()){
+                        String fullName = task.getResult();
+                        if(fullName != null){
+                            name[0] = fullName;
+                        }else{
+                            Log.d("AppealTrackRenter", "full name import ERROR" );
+                        }
+                    }else {
+                        Log.d("AppealTrackRenter", "full name import ERROR(not successful" );
+                    }
+                }
+            });
+            return name[0];
+        }
+        else{
+            return userObj.getFullName();
+        }
+    }
+    private Task<String> getNameRented(String rentedId){
+        return fStore.collection("users").document(rentedId).get()
+                .continueWith(new Continuation<DocumentSnapshot, String>() {
+                    @Override
+                    public String then(@NonNull Task<DocumentSnapshot> task) throws Exception {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                return document.getString("fullName");
+                            }else {
+                                Log.d("AppealTrackRenter", "getRentedName ERROR");
+                            }
+                        }else {
+                            Log.d("AppealTrackRenter", "getRentedName ERROR(not success");
+                        }
+                        return null;
                     }
                 });
     }

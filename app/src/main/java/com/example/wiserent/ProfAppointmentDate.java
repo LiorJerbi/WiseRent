@@ -123,13 +123,13 @@ public class ProfAppointmentDate extends AppCompatActivity {
         String selectedDate = selectedDateEditText.getText().toString().trim();
 
         if (TextUtils.isEmpty(selectedDate)) {
-            Toast.makeText(this, "Select a date for the appointment", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "בחר תאריך להגעת בעל מקצוע", Toast.LENGTH_SHORT).show();
             return;
         }
 
         professionalAppointment.setProfessionalType(professionalType);
         professionalAppointment.setDate(selectedDate);
-        professionalAppointment.setStatus(false); // Assuming status is initially set to false
+        professionalAppointment.setStatus(false);
 
         saveProfessionalAppointmentToFirebase(professionalAppointment, selectedProperty);
     }
