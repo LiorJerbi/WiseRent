@@ -46,6 +46,6 @@ WiseRent is a mobile application designed to streamline property management task
 ## Contributors
 
 - [Lior Jerbi](https://github.com/LiorJerbi)
-- [Assaf Shmaryahu](https://github.com/Assaf34554)
+- [Assaf Shmaryahu](https://github.com/Asaf34554)
 - [Yael Rosen](https://github.com/yaelrosen77)
 - [Rotem Kochavi](https://github.com/RotemKochavi)
