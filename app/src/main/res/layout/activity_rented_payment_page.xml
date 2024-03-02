@@ -1,58 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundwallp"
     tools:context=".AppealTrackRented">
-
-    <TableLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="8dp"
-        android:stretchColumns="*"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/newAppeal"
-        app:layout_constraintVertical_bias="1.0">
-
-        <!-- Table Headers -->
-        <TableRow android:layout_height="52dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="טופל"
-                android:textAlignment="center" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="חודש"
-                android:textAlignment="center" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="סוג"
-                android:textAlignment="center" />
-        </TableRow>
-
-        <!-- Row 1 -->
-
-
-        <!-- Row 2 -->
-
-        <!-- Row 3 -->
-    </TableLayout>
 
     <ImageView
         android:id="@+id/appLogo"
@@ -69,25 +23,60 @@
         android:layout_width="50dp"
         android:layout_height="58dp"
         android:layout_marginTop="16dp"
-        android:contentDescription="User button for rented homepage"
         android:scaleType="centerCrop"
+        android:contentDescription="User button for rented homepage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/usericon" />
 
-    <TextView
-        android:id="@+id/newAppeal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="164dp"
-        android:fontFamily="sans-serif-black"
-        android:text="תשלומים"
-        android:textSize="20sp"
-        android:textStyle="bold"
+    <TableLayout
+        android:id="@+id/appealTableLayout"
+        android:layout_width="395dp"
+        android:layout_height="643dp"
+        android:layout_marginTop="20dp"
+        android:stretchColumns="*"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appLogo" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userBtn">
+
+        <!-- Table Header -->
+        <TableRow>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="מעבר לתשלום"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="מחיר"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="חודש"
+                android:textStyle="bold" />
+
+
+
+            <!-- New Column for Button -->
+            <TextView
+                android:layout_width="28dp"
+                android:layout_height="wrap_content"
+                android:text="סוג הפנייה"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+    </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
