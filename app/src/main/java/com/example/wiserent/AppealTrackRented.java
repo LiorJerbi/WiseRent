@@ -8,13 +8,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -125,6 +129,34 @@ public class AppealTrackRented extends AppCompatActivity {
                                                 row.addView(statusTextView);
                                                 row.addView(addressTextView);
 
+                                                if (appeal instanceof Bill || appeal instanceof ProfessionalAppointment) {
+                                                    Button modifyButton = new Button(getApplicationContext()); // Use getApplicationContext() here
+                                                    modifyButton.setText("עדכון פנייה");
+
+                                                    // Set the button's layout parameters to make it smaller
+                                                    TableRow.LayoutParams buttonLayoutParams = new TableRow.LayoutParams(
+                                                            TableRow.LayoutParams.WRAP_CONTENT,
+                                                            TableRow.LayoutParams.WRAP_CONTENT
+                                                    );
+                                                    buttonLayoutParams.setMargins(4, 0, 4, 0); // Adjust margins as needed
+                                                    modifyButton.setLayoutParams(buttonLayoutParams);
+
+                                                    modifyButton.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View v) {
+                                                            // Handle update for Bill or Professional Appointment appeal
+                                                            if (appeal instanceof Bill) {
+                                                                // Assuming updateStatus method is available in your class
+                                                                updateStatus((Bill) appeal, document.getId());
+                                                            } else if (appeal instanceof ProfessionalAppointment) {
+                                                                // Assuming updateStatus method is available in your class
+                                                                updateStatus((ProfessionalAppointment) appeal, document.getId());
+                                                            }
+                                                        }
+                                                    });
+                                                    row.addView(modifyButton);
+                                                }
+
                                                 // Add the row to the table
                                                 tableLayout.addView(row);
                                             });
@@ -140,6 +172,7 @@ public class AppealTrackRented extends AppCompatActivity {
 
         }
     }
+
 
     private String getContentText(Appeal appeal) {
         if (appeal instanceof Bill) {
@@ -256,4 +289,53 @@ public class AppealTrackRented extends AppCompatActivity {
     interface Callback<T> {
         void onCallback(T data);
     }
+    private void updateStatus(Bill appeal, String documentId) {
+        // Update the status of the appeal in Firestore
+        appeal.setStatus(true); // Assuming setStatus method exists in Bill class
+
+        // Update the status field in Firestore document
+        fStore.collection("appeals").document(documentId).update("status", true)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Optionally, show a success message
+                        Toast.makeText(AppealTrackRented.this, "Status updated successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                        Log.e("AppealTrackRented", "Error updating status: " + e.getMessage());
+                        // Optionally, show an error message
+                        Toast.makeText(AppealTrackRented.this, "Failed to update status", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void updateStatus(ProfessionalAppointment appeal, String documentId) {
+        // Update the status of the appeal in Firestore
+        appeal.setStatus(true); // Assuming setStatus method exists in ProfessionalAppointment class
+
+        // Update the status field in Firestore document
+        fStore.collection("appeals").document(documentId).update("status", true)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Optionally, show a success message
+                        Toast.makeText(AppealTrackRented.this, "Status updated successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                        Log.e("AppealTrackRented", "Error updating status: " + e.getMessage());
+                        // Optionally, show an error message
+                        Toast.makeText(AppealTrackRented.this, "Failed to update status", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+
 }

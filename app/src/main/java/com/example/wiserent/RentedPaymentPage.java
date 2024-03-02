@@ -22,10 +22,6 @@ public class RentedPaymentPage extends AppCompatActivity {
         Intent intent = getIntent();
         userObj = (User) intent.getSerializableExtra("user");
         bUserBtn = findViewById(R.id.userBtn);
-        bpayment1Btn = findViewById(R.id.payment1Btn);
-        bpayment2Btn = findViewById(R.id.payment2Btn);
-        bpayment3Btn = findViewById(R.id.payment3Btn);
-
         bUserBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

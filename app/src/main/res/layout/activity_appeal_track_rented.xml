@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundwallp"
     tools:context=".AppealTrackRented">
+
     <ImageView
         android:id="@+id/appLogo"
         android:layout_width="129dp"
@@ -22,7 +24,7 @@
         android:layout_height="58dp"
         android:layout_marginTop="16dp"
         android:scaleType="centerCrop"
-        android:contentDescription="Home button for renter homepage"
+        android:contentDescription="User button for rented homepage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +55,7 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:text="תוכן הפניה"
                 android:textStyle="bold" />
@@ -71,11 +73,16 @@
                 android:layout_weight="2"
                 android:text="כתובת הנכס"
                 android:textStyle="bold" />
+
+            <!-- New Column for Button -->
+            <TextView
+                android:layout_width="28dp"
+                android:layout_height="wrap_content"
+                android:text="עדכון פנייה"
+                android:textStyle="bold" />
+
         </TableRow>
 
     </TableLayout>
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

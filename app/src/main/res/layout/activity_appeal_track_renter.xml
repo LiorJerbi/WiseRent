@@ -55,7 +55,7 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
                 android:text="תוכן הפניה"
                 android:textStyle="bold" />
@@ -73,6 +73,14 @@
                 android:layout_weight="2"
                 android:text="כתובת הנכס"
                 android:textStyle="bold" />
+
+            <!-- New Column for Button -->
+            <TextView
+                android:layout_width="28dp"
+                android:layout_height="wrap_content"
+                android:text="עדכון פנייה"
+                android:textStyle="bold" />
+
         </TableRow>
 
     </TableLayout>

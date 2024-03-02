@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -129,6 +133,28 @@ public class AppealTrackRenter extends AppCompatActivity {
 
                                         // Add the row to the table
                                         tableLayout.addView(row);
+
+                                        // Add a Button to modify the status for GeneralProblem appeals
+                                        if (appeal instanceof GeneralProblem) {
+                                            Button modifyButton = new Button(this);
+                                            modifyButton.setText("עדכון פנייה");
+
+                                            // Set the button's layout parameters to make it smaller
+                                            TableRow.LayoutParams buttonLayoutParams = new TableRow.LayoutParams(
+                                                    TableRow.LayoutParams.WRAP_CONTENT,
+                                                    TableRow.LayoutParams.WRAP_CONTENT
+                                            );
+                                            buttonLayoutParams.setMargins(4, 0, 4, 0); // Adjust margins as needed
+                                            modifyButton.setLayoutParams(buttonLayoutParams);
+
+                                            modifyButton.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    updateStatus((GeneralProblem) appeal, document.getId());
+                                                }
+                                            });
+                                            row.addView(modifyButton);
+                                        }
                                     });
                                 }
                             }
@@ -193,4 +219,30 @@ public class AppealTrackRenter extends AppCompatActivity {
     interface Callback<T> {
         void onCallback(T data);
     }
+    private void updateStatus(GeneralProblem appeal, String documentId) {
+        // Update the status of the appeal in Firestore
+        appeal.setStatus(true); // Assuming setStatus method exists in GeneralProblem class
+
+        // Update the status field in Firestore document
+        fStore.collection("appeals").document(documentId).update("status", true)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Update the UI to reflect the change if necessary
+//                        statusTextView.setText("V");
+                        // Optionally, show a success message
+                        Toast.makeText(AppealTrackRenter.this, "Status updated successfully", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                        Log.e("AppealTrackRenter", "Error updating status: " + e.getMessage());
+                        // Optionally, show an error message
+                        Toast.makeText(AppealTrackRenter.this, "Failed to update status", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 }
