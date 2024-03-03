@@ -130,15 +130,15 @@ public class AppealTrackRented extends AppCompatActivity {
                                                 row.addView(addressTextView);
 
                                                 if (appeal instanceof Bill || appeal instanceof ProfessionalAppointment) {
-                                                    Button modifyButton = new Button(getApplicationContext()); // Use getApplicationContext() here
-                                                    modifyButton.setText("עדכון פנייה");
+                                                    Button modifyButton = new Button(getApplicationContext());
+                                                    modifyButton.setText("עדכון");
 
                                                     // Set the button's layout parameters to make it smaller
                                                     TableRow.LayoutParams buttonLayoutParams = new TableRow.LayoutParams(
                                                             TableRow.LayoutParams.WRAP_CONTENT,
                                                             TableRow.LayoutParams.WRAP_CONTENT
                                                     );
-                                                    buttonLayoutParams.setMargins(4, 0, 4, 0); // Adjust margins as needed
+                                                    buttonLayoutParams.setMargins(4, 0, 4, 0);
                                                     modifyButton.setLayoutParams(buttonLayoutParams);
 
                                                     modifyButton.setOnClickListener(new View.OnClickListener() {
@@ -291,14 +291,13 @@ public class AppealTrackRented extends AppCompatActivity {
     }
     private void updateStatus(Bill appeal, String documentId) {
         // Update the status of the appeal in Firestore
-        appeal.setStatus(true); // Assuming setStatus method exists in Bill class
+        appeal.setStatus(true);
 
         // Update the status field in Firestore document
         fStore.collection("appeals").document(documentId).update("status", true)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // Optionally, show a success message
                         Toast.makeText(AppealTrackRented.this, "Status updated successfully", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -307,7 +306,6 @@ public class AppealTrackRented extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         // Handle failure
                         Log.e("AppealTrackRented", "Error updating status: " + e.getMessage());
-                        // Optionally, show an error message
                         Toast.makeText(AppealTrackRented.this, "Failed to update status", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -331,7 +329,6 @@ public class AppealTrackRented extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         // Handle failure
                         Log.e("AppealTrackRented", "Error updating status: " + e.getMessage());
-                        // Optionally, show an error message
                         Toast.makeText(AppealTrackRented.this, "Failed to update status", Toast.LENGTH_SHORT).show();
                     }
                 });

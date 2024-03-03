@@ -137,14 +137,14 @@ public class AppealTrackRenter extends AppCompatActivity {
                                         // Add a Button to modify the status for GeneralProblem appeals
                                         if (appeal instanceof GeneralProblem) {
                                             Button modifyButton = new Button(this);
-                                            modifyButton.setText("עדכון פנייה");
+                                            modifyButton.setText("עדכון");
 
                                             // Set the button's layout parameters to make it smaller
                                             TableRow.LayoutParams buttonLayoutParams = new TableRow.LayoutParams(
                                                     TableRow.LayoutParams.WRAP_CONTENT,
                                                     TableRow.LayoutParams.WRAP_CONTENT
                                             );
-                                            buttonLayoutParams.setMargins(4, 0, 4, 0); // Adjust margins as needed
+                                            buttonLayoutParams.setMargins(4, 0, 4, 0);
                                             modifyButton.setLayoutParams(buttonLayoutParams);
 
                                             modifyButton.setOnClickListener(new View.OnClickListener() {
@@ -230,7 +230,6 @@ public class AppealTrackRenter extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         // Update the UI to reflect the change if necessary
 //                        statusTextView.setText("V");
-                        // Optionally, show a success message
                         Toast.makeText(AppealTrackRenter.this, "Status updated successfully", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -239,7 +238,6 @@ public class AppealTrackRenter extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         // Handle failure
                         Log.e("AppealTrackRenter", "Error updating status: " + e.getMessage());
-                        // Optionally, show an error message
                         Toast.makeText(AppealTrackRenter.this, "Failed to update status", Toast.LENGTH_SHORT).show();
                     }
                 });

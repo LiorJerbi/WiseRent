@@ -47,38 +47,43 @@
         <TableRow>
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="פותח הפניה"
+                android:textAlignment="center"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="תוכן הפניה"
+                android:textAlignment="center"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="סטטוס"
+                android:textAlignment="center"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="כתובת הנכס"
+                android:textAlignment="center"
                 android:textStyle="bold" />
 
             <!-- New Column for Button -->
             <TextView
-                android:layout_width="28dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="עדכון פנייה"
+                android:text="עדכון סטטוס"
+                android:textAlignment="center"
                 android:textStyle="bold" />
 
         </TableRow>

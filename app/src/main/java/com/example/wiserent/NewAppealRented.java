@@ -128,6 +128,7 @@ public class NewAppealRented extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         // The user's appeal list has been successfully updated in Firebase
                         finish(); // Close the activity after successful update
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
