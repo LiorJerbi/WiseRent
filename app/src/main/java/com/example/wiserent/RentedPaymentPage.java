@@ -107,12 +107,13 @@ public class RentedPaymentPage extends AppCompatActivity {
                                     monthTextView.setText(bill.getMonth());
                                     typeTextView.setText(bill.getBillType());
 
+                                    monthTextView.setGravity(Gravity.CENTER);
+
                                     // Add OnClickListener to the payment button
                                     paymentButton.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             // Handle payment button click
-                                            // For example, navigate to payment activity
 //                                            Intent paymentIntent = new Intent(RentedPaymentPage.this, PaymentActivity.class);
 //                                            paymentIntent.putExtra("bill", bill); // Pass bill object to payment activity
 //                                            startActivity(paymentIntent);
@@ -124,6 +125,7 @@ public class RentedPaymentPage extends AppCompatActivity {
                                     row.addView(amountTextView);
                                     row.addView(monthTextView);
                                     row.addView(typeTextView);
+
 
                                     // Add the row to the table
                                     tableLayout.addView(row);
