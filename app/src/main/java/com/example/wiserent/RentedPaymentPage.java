@@ -98,8 +98,8 @@ public class RentedPaymentPage extends AppCompatActivity {
 
                                     // Set the text alignment for each TextView
                                     amountTextView.setGravity(Gravity.END);
-                                    monthTextView.setGravity(Gravity.END);
-                                    typeTextView.setGravity(Gravity.END);
+                                    monthTextView.setGravity(Gravity.CENTER);
+                                    typeTextView.setGravity(Gravity.CENTER);
 
                                     // Set the text for each TextView
                                     paymentButton.setText("תשלום");
@@ -107,7 +107,7 @@ public class RentedPaymentPage extends AppCompatActivity {
                                     monthTextView.setText(bill.getMonth());
                                     typeTextView.setText(bill.getBillType());
 
-                                    monthTextView.setGravity(Gravity.CENTER);
+//                                    monthTextView.setGravity(Gravity.CENTER);
 
                                     // Add OnClickListener to the payment button
                                     paymentButton.setOnClickListener(new View.OnClickListener() {

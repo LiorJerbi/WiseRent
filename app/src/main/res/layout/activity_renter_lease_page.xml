@@ -64,7 +64,7 @@
                 <TextView
                     android:gravity="center"
                     android:padding="8dp"
-                    android:text="כתובת השולח" />
+                    android:text="כתובת הנכס" />
 
                 <TextView
                     android:gravity="center"
