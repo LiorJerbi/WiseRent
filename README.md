@@ -4,6 +4,11 @@
 
 WiseRent is a mobile application designed to streamline property management tasks for both property owners and renters. The app facilitates communication between landlords and tenants, allows users to track property-related issues and appeals, manage payments and bills, and schedule professional appointments.
 
+## Presantation
+
+You can look at the presantation we did about this project in this link: [WiseRent Presantation](https://www.canva.com/design/DAF-F0eOF1o/XZpBPTYERNQQkI9ChSo8ig/view?utm_content=DAF-F0eOF1o&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+
+
 ## Features
 
 - User Authentication:
