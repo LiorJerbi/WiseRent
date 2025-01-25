@@ -17,29 +17,29 @@ public class ExampleUnitTest {
     @Test
     public void testSetGetAddress() {
         // 1. Set up conditions
-        Property property = new Property("1", "123 Main St", 1000.0, "renter123");
+        Property property = new Property("1", "רמבם 11", 1000.0, "מושיקו");
 
         // 2. Call the function under test
-        property.setAddress("456 Elm St");
+        property.setAddress("רמבם 5");
 
         // 3. Assertions
-        assertEquals("456 Elm St", property.getAddress());
+        assertEquals("רמבם 5", property.getAddress());
     }
     @Test
     public void testSetGetRenterId() {
         // 1. Set up conditions
-        Property property = new Property("1", "123 Main St", 1000.0, "renter123");
+        Property property = new Property("1", "אביבים 2", 1000.0, "ציפורה");
 
         // 2. Call the function under test
-        property.setRenterId("newRenterId");
+        property.setRenterId("ציפורה");
 
         // 3. Assertions
-        assertEquals("newRenterId", property.getRenterId());
+        assertEquals("ציפורה", property.getRenterId());
     }
     @Test
     public void testGetRentAmount() {
         // 1. Set up conditions
-        Property property = new Property("1", "123 Main St", 1000.0, "renter123");
+        Property property = new Property("1", "החרמון 8", 1000.0, "שלג");
 
         // 2. Call the function under test (getRentAmount)
         double rentAmount = property.getRentAmount();
