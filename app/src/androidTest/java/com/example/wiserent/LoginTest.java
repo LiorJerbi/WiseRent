@@ -4,12 +4,13 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import android.content.Intent;
-
-import androidx.test.core.app.ActivityScenario;
+//import android.content.Intent;
+//
+//import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -72,4 +73,15 @@ public class LoginTest {
         // Check password field error
         onView(withId(R.id.Password)).check(matches(withText("שדה סיסמא ריק.")));
     }
+    @Test
+    public void testNavigateToRegister() {
+        // Click on the "אין לך משתמש? הרשם כאן!" text to navigate to the Register activity
+        onView(withId(R.id.createText)).perform(click());
+
+        // Check if the Register activity is displayed by verifying the presence of the "Register" button
+        onView(withId(R.id.RegisterBtn))
+                .check(matches(isDisplayed()));
+    }
+
+
 }
